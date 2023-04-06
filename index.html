@@ -1,0 +1,21 @@
+<html>
+  <head>
+    <title>Challenge Framework</title>
+    <style>
+      .absCenteredCanvas {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: darkgray;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="drawToMe" class="absCenteredCanvas" width="1280" height="720">Your browser is too old to support canvas :-(</canvas>
+    <script type="module">
+      import * as framework from "./index.js";
+      framework.launch(document.getElementById("drawToMe"));
+    </script>
+  </body>
+</html>
