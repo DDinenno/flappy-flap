@@ -428,14 +428,14 @@ class Pipe extends GameObject {
       this.movingDown = false;
       this.movingUp = false;
 
-      // if (this.count > 20) {
-      const chance = 0.3; //0.05 + this.count / 50;
-      if (Math.random() < chance) {
-        this.movingDown = true;
-      } else if (Math.random() < chance) {
-        this.movingUp = true;
+      if (this.count > 10) {
+        const chance = 0.05 + this.count / 50;
+        if (Math.random() < chance) {
+          this.movingDown = true;
+        } else if (Math.random() < chance) {
+          this.movingUp = true;
+        }
       }
-      // }
     }
   }
 
