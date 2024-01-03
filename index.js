@@ -186,8 +186,8 @@ class Collider {
     const collided = !!Collider.colliders.find((col) => {
       if (col.gameObject === this.gameObject) return;
 
-      const aX = this.gameObject.position.x
-      const aY = this.gameObject.position.y
+      const aX = this.gameObject.position.x;
+      const aY = this.gameObject.position.y;
       const aW = this.gameObject.width;
       const aH = this.gameObject.height;
 
@@ -231,9 +231,7 @@ class Collider {
     this.gameObject.onRender((ctx) => {
       if (go.image == null) return;
 
-      ctx.fillStyle = this.isColliding()
-        ? "#f32f32A1"
-        : "#fc7f03A1";
+      ctx.fillStyle = this.isColliding() ? "#f32f32A1" : "#fc7f03A1";
 
       if (DEBUG) {
         if (go.circular) {
@@ -273,9 +271,9 @@ class GameObject {
 
   scaleY = 1;
 
-  offsetX = 0
+  offsetX = 0;
 
-  offsetY = 0
+  offsetY = 0;
 
   image = null;
 
@@ -312,8 +310,8 @@ class GameObject {
     this.scaleX = scaleX;
     this.scaleY = scaleY;
 
-    this.offsetX = offsetX
-    this.offsetY = offsetY
+    this.offsetX = offsetX;
+    this.offsetY = offsetY;
 
     this.image = image;
 
@@ -340,7 +338,13 @@ class GameObject {
 
     this.image = img;
 
-    drawImage(ctx, this.image, this.position.x + this.offsetX, this.position.y + this.offsetY, this.rotation);
+    drawImage(
+      ctx,
+      this.image,
+      this.position.x + this.offsetX,
+      this.position.y + this.offsetY,
+      this.rotation
+    );
 
     this.listeners.forEach((cb) => cb(ctx, img));
   }
@@ -363,9 +367,7 @@ class Player extends GameObject {
       if (e.key === " " && !this.freeze) {
         this.holdingSpace = true;
 
-        if (this.holdTime < 8)
-          this.holdTime += 1;
-
+        if (this.holdTime < 8) this.holdTime += 1;
       }
     });
 
@@ -426,14 +428,14 @@ class Pipe extends GameObject {
       this.movingDown = false;
       this.movingUp = false;
 
-      if (this.count > 20) {
-        const chance = 0.05 + this.count / 50;
-        if (Math.random() < chance) {
-          this.movingDown = true;
-        } else if (Math.random() < chance) {
-          this.movingUp = true;
-        }
+      // if (this.count > 20) {
+      const chance = 0.3; //0.05 + this.count / 50;
+      if (Math.random() < chance) {
+        this.movingDown = true;
+      } else if (Math.random() < chance) {
+        this.movingUp = true;
       }
+      // }
     }
   }
 
@@ -483,11 +485,11 @@ const mainDrawFunction = (app) => {
 
   const wave = Math.floor(
     (app.frameCounter * 3.2 * bgSpeedModifier) /
-    (screenWidth + app.image.pipe.width)
+      (screenWidth + app.image.pipe.width)
   );
   const score = Math.floor(
     (app.frameCounter * 3.2 * bgSpeedModifier + screenWidth / 2) /
-    (screenWidth + app.image.pipe.width)
+      (screenWidth + app.image.pipe.width)
   );
 
   for (let i = 0; i < app.pipes.length; i += 2) {
@@ -614,21 +616,8 @@ export const launch = (canvasRef) => {
     app
   );
 
-  const fps = 60;
-  let now;
-  let then = Date.now();
-  let interval = 1000 / fps;
-  let delta;
-
   // Schedule the first animation frame.
   window.requestAnimationFrame(() => {
-    now = Date.now();
-    delta = now - then;
-
-    if (delta > interval) {
-      drawFunctionSafetyWrapper(app);
-
-      then = now - (delta % interval);
-    }
+    drawFunctionSafetyWrapper(app);
   });
 };
